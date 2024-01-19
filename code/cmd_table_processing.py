@@ -18,8 +18,10 @@ def main(filename):
     with open(filename, "r") as file:
         for line in tqdm(file, desc="Processing file", unit="line"):
             line = file.readline()
+            # Looks for line that matches the pattern for every new column
             match = re.match(table_start_pattern, line)
             if match:
+                # If the column matches the pattern, then start a new table
                 table_num += 1
                 stripped_line = line.strip()
                 stripped_line = stripped_line.replace("\t", " ")
@@ -28,18 +30,17 @@ def main(filename):
                 comma_separated_line = space_separated_line.replace(" ", ",")
                 list_of_colname = comma_separated_line.split(",")
 
-                # Make new dataframe
-                # Make new dataframe if this is a new table
+                
                 if table_num > len(data_frames):
-                    print(f"{table_num} New dataframe created")
+                    # print(f"{table_num} New dataframe created")
                     df = pd.DataFrame(columns=list_of_colname)
                     data_frames.append(df)
                 else:
                     df = data_frames[table_num]
-
+            # If first element on the line is a comment then ignore it
             elif line[0] == "#":
                 pass
-
+            # if line doesnt meet any of the above criteria then it is assumed to be isochrone row data and is added to the newest dataframe
             else:
                 stripped_line = line.strip()
                 stripped_line = stripped_line.replace("\t", " ")
@@ -53,8 +54,8 @@ def main(filename):
                 df.loc[len(df)] = list_of_data
 
 
- 
 
+    # Save each isochrone as a separate csv
     os.makedirs(
         f"/Users/mmckay/phd_projects/analysis_routine/DATA/CMD37_csvs/{filename.split('/')[-1].split('.')[0]}",
         exist_ok=True,
