@@ -123,7 +123,7 @@ def cmd_isochrone_processing(isochrone_csv, distance_modules=24.45, save_tables=
     cmd_df['F475W_appmag-F814W_appmag'] = cmd_df['F475W_appmag'] - cmd_df['F814W_appmag']
 
     # save the processed isochrone table
-    if save_tables == True:
+    if save_tables is True:
         cmd_df.to_csv(f'{isochrone_csv}')
 
     return cmd_df
@@ -176,6 +176,10 @@ def isochrone_rgb_selection(isochrone_dirpath, output_dir):
         rgb_df.to_csv('{}/RGB_Zini_{}.csv'.format(output_dir, df['Zini'].iloc[0]), index=False)
         
     RGB_merged_df = pd.concat(rgb_dfs)
+    RGB_AGB_merged_df = pd.concat(dfs)
+
+    #  Save dataframes as csvs
     RGB_merged_df.to_csv(f'{output_dir}/RGB_isochrone_table.csv', index=False) 
+    RGB_AGB_merged_df.to_csv(f'{output_dir}/RGB_AGB_isochrone_table.csv', index=False)
 
     return RGB_merged_df
