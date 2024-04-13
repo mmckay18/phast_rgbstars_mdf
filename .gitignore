@@ -1,5 +1,4 @@
 /DATA
 /FIGURES/*
 *.pyc
-
-
+/code/photometry_fns/__pycache__/*

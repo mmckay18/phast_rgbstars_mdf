@@ -8,6 +8,7 @@ from scipy.interpolate import interp1d
 from astropy.coordinates import SkyCoord
 import astropy.units as u
 import os
+from astropy.io import fits
 import matplotlib.colors as colors
 
 
@@ -156,7 +157,7 @@ def create_spatial_bins_and_median_optimized(ra, dec, values, bin_size_deg):
     median_values = bin_values / bin_counts_nonzero
     median_values = median_values.reshape((num_bins_ra, num_bins_dec))
 
-    # calaculate the sum of the bin values
+    # calaculate the sum of the bin values - number density
     sum_values = bin_values / bin_counts_nonzero
     sum_values = bin_values.reshape((num_bins_ra, num_bins_dec))
     sum_values = np.where(sum_values == 0.0, np.nan, sum_values)
@@ -276,13 +277,13 @@ def plot_cmd_mdf_spatial(
     axs[1].set_title("Metallicity Distribution Function (MDF)")
 
     # Stellar Density binned map
-    min_ra, max_ra, min_dec, max_dec, median_values, sum_values, bin_counts_nonzero = (
+    min_ra, max_ra, min_dec, max_dec, median_values, sum_values, density_map = (
         create_spatial_bins_and_median_optimized(
             ra, dec, z_col_arr, bin_size_deg=bin_size_deg
         )
     )
     im = axs[2].imshow(
-        bin_counts_nonzero.T,
+        density_map.T,
         cmap="ocean",
         aspect="auto",
         extent=[min_ra, max_ra, max_dec, min_dec],
@@ -290,7 +291,7 @@ def plot_cmd_mdf_spatial(
     )
     axs[2].set_xlabel("RA")
     axs[2].set_ylabel("DEC")
-    axs[2].set_title(f"Stellar Density ({bin_size_deg} deg)")
+    axs[2].set_title(f"Stellar Density ({bin_size_deg} deg^2)")
     axs[2].invert_xaxis()
     axs[2].invert_yaxis()
     plt.colorbar(im, label=r"$\log(N \times 0.01\,\mathrm{deg}^2)$")
@@ -304,7 +305,7 @@ def plot_cmd_mdf_spatial(
     )
     axs[3].set_xlabel("RA")
     axs[3].set_ylabel("DEC")
-    axs[3].set_title(f"Median M/H ({bin_size_deg} deg)")
+    axs[3].set_title(f"Median M/H ({bin_size_deg} deg^2)")
     axs[3].invert_xaxis()
     axs[3].invert_yaxis()
     plt.colorbar(im1, label=f"Median {z_col}")
@@ -318,7 +319,14 @@ def plot_cmd_mdf_spatial(
     plt.savefig(savefig_filepath)
     plt.show()
 
-    return median_values, bin_counts_nonzero
+    # Save median M/H and stellar density maps to FITS file
+    hdu_bin_counts = fits.PrimaryHDU(density_map.T)
+    hdu_median = fits.ImageHDU(median_values.T)
+    hdul = fits.HDUList([hdu_bin_counts, hdu_median])
+    fitspath = savefig_filepath.split(".")[0] + ".fits"
+    hdul.writeto(fitspath, overwrite=True)
+
+    return median_values, density_map
 
 
 def photometry_spatial_map():

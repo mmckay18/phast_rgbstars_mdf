@@ -162,8 +162,8 @@ def reduce_optical_photmetry_table(photometry_fits_filepath, output_filepath):
 
     # Gregersen et al 2015 criteria GST(good stars)
     catalog_df = df.loc[
-        (df["f475w_flag"] == 0.0)
-        & (df["f814w_flag"] == 0.0)
+        (df["f475w_flag"] != 0.0)
+        & (df["f814w_flag"] != 0.0)
         & (df["f475w_snr"] >= 4.0)
         & (df["f814w_snr"] >= 4.0)
         & (df["f475w_crowd"] + df["f814w_crowd"] <= 1.0)
@@ -211,8 +211,8 @@ def phast_reduce_optical_photmetry_table(photometry_fits_filepath, output_filepa
 
     # Gregersen et al 2015 criteria GST(good stars)
     catalog_df = df.loc[
-        (df["f475w_flag"] < 8.0) &
-        (df["f814w_flag"] < 8.0)
+        (df["f475w_flag"] < 8.0)
+        & (df["f814w_flag"] < 8.0)
         & (df["f475w_snr"] >= 4.0)
         & (df["f814w_snr"] >= 4.0)
         & (df["f475w_crowd"] + df["f814w_crowd"] <= 1.0)
