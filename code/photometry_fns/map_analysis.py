@@ -76,7 +76,7 @@ def set_phast_wcs(input_FITS_filepath, overwrite=False, show_plot=True):
 
 
 def set_m31_wcs(input_FITS_filepath, overwrite=False, show_plot=True):
-    m31_hdu = fits.open('/Users/mmckay/phd_projects/analysis_routine/DATA/m31_cmd_mdf_spatial_gregersen_box.fits')
+    m31_hdu = fits.open(input_FITS_filepath, mode='update')
 
     #! Remove PC1_1 and PC2_2 from the header
     if 'PC1_1' in m31_hdu[0].header:
@@ -112,14 +112,14 @@ def set_m31_wcs(input_FITS_filepath, overwrite=False, show_plot=True):
     print(w)
 
     m31_hdu[0].header.update(w.to_header())
-    m31_hdu.writeto('input_FITS_filepath', overwrite=overwrite)
+    m31_hdu.writeto(input_FITS_filepath, overwrite=overwrite)
 
     if show_plot:
         fig = plt.figure(figsize=(10, 10))
         ax = fig.add_subplot(111, projection=w)
 
         # Plot the image data
-        ax.imshow(m31_hdu[0].data, cmap='magma', origin='lower')
+        ax.imshow(m31_hdu[1].data, cmap='magma', origin='lower')
         # Add contour lines
         # contour_levels = np.nanpercentile(m31_hdu[0].data, [-1])
         # plt.contour(m31_hdu[0].data, levels=contour_levels, colors='black')
@@ -148,6 +148,12 @@ def make_m31_maps_FITS(csv_filepath, output_fitsfile='/Users/mmckay/phd_projects
 
     Returns:
     None
+    
+
+    Example:
+    from map_analysis import *
+    csv_filepath = '/Users/mmckay/phd_projects/analysis_routine/DATA/interpolated_m31_MH_catalog.csv'
+    make_m31_maps_FITS(csv_filepath, output_fitsfile='/Users/mmckay/phd_projects/analysis_routine/DATA/all_catalog_maps_fitsfiles/test_m31_catalog.fits', overwrite=True)
     """
     
     # Read in the dataframe
@@ -159,8 +165,8 @@ def make_m31_maps_FITS(csv_filepath, output_fitsfile='/Users/mmckay/phd_projects
     hdul = fits.HDUList([hdu])
     # Loop over each column in the dataframe
     print('Binning Maps...')
-    for col_name in df.columns[3:4]:
-        if col_name not in ['ra', 'dec']:
+    for col_name in df.columns:
+        if col_name not in ['ra', 'dec', 'Unnamed: 0']:
             print(col_name.upper())
             ra = df['ra']
             dec = df['dec']

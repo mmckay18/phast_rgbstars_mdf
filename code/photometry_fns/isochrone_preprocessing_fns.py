@@ -31,7 +31,8 @@ def read_sort_isochrone_table(filename, output_dir):
     table_num = 0
     with open(filename, "r") as file:
         for line in tqdm(file, desc="Processing file", unit="line"):
-            line = file.readline()
+            # line = file.readline()
+            # print(f'Line: {line}')
             # Looks for line that matches the pattern for every new column
             match = re.match(table_start_pattern, line)
             if match:
@@ -172,14 +173,16 @@ def isochrone_rgb_selection(isochrone_dirpath, output_dir):
         rgb_dfs.append(rgb_df)
 
         # save RGB files
-        os.makedirs(f'{output_dir}', exist_ok=True)
-        rgb_df.to_csv('{}/RGB_Zini_{}.csv'.format(output_dir, df['Zini'].iloc[0]), index=False)
+        os.makedirs(f'{output_dir}/RGB/', exist_ok=True)
+        os.makedirs(f'{output_dir}/RGB_AGB/', exist_ok=True)
+        rgb_df.to_csv('{}/RGB/RGB_Zini_{}.csv'.format(output_dir, df['Zini'].iloc[0]), index=False)
+        df.to_csv('{}/RGB_AGB/RGB_AGB_Zini_{}.csv'.format(output_dir, df['Zini'].iloc[0]), index=False)
         
     RGB_merged_df = pd.concat(rgb_dfs)
     RGB_AGB_merged_df = pd.concat(dfs)
 
     #  Save dataframes as csvs
-    RGB_merged_df.to_csv(f'{output_dir}/RGB_isochrone_table.csv', index=False) 
-    RGB_AGB_merged_df.to_csv(f'{output_dir}/RGB_AGB_isochrone_table.csv', index=False)
+    RGB_merged_df.to_csv(f'{output_dir}/RGB/RGB_isochrone_table.csv', index=False) 
+    RGB_AGB_merged_df.to_csv(f'{output_dir}/RGB_AGB/RGB_AGB_isochrone_table.csv', index=False)
 
     return RGB_merged_df
