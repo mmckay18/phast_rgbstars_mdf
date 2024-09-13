@@ -139,7 +139,7 @@ def make_optical_photmetry_from_hst_dataproduct(
         print(f"Total number of stars: {len(df)}")
 
 
-def reduce_optical_photmetry_table(photometry_fits_filepath, output_filepath):
+def phat_reduce_optical_photmetry_table(photometry_fits_filepath, output_filepath, gst_criteria ='Z24'):
     """
     Reads in the photometry fits table produced by the HST pipeline and filters it using the criteria from
     Gregersen et al 2015 for GST. The remaining stars are foreground extinction corrected and saved as a csv.
@@ -151,6 +151,9 @@ def reduce_optical_photmetry_table(photometry_fits_filepath, output_filepath):
     output_filepath : str
         Path to the directory where the output csv will be saved
         (i.e /Users/mmckay/phd_projects/analysis_routine/DATA/reduced_phast_catalog.csv)
+    gst_criteria : str, optional
+        Criteria to use for filtering the catalog. Options are 'G15' for Gregersen et al 2015 criteria
+        or 'Z24' for Zhuo et al 2015 criteria, by default 'Z24'
 
     Returns
     -------
@@ -159,22 +162,36 @@ def reduce_optical_photmetry_table(photometry_fits_filepath, output_filepath):
 
     """
     df = pd.read_csv(photometry_fits_filepath)
+    print(f"Total number of stars: {len(df)}")
+    if gst_criteria == 'G15':
 
-    # Gregersen et al 2015 criteria GST(good stars)
-    catalog_df = df.loc[
-        (df["f475w_flag"] != 0.0)
-        & (df["f814w_flag"] != 0.0)
-        & (df["f475w_snr"] >= 4.0)
-        & (df["f814w_snr"] >= 4.0)
-        & (df["f475w_crowd"] + df["f814w_crowd"] <= 1.0)
-        & ((df["f475w_sharp"] + df["f814w_sharp"]) ** 2 <= 0.075)
-        #  & (df['f814w_vega'] <= 23.0) # Apply after foreground reddening correction
-    ]
+        # Gregersen et al 2015 criteria GST(good stars)
+        catalog_df = df.loc[
+            # (df["f475w_flag"] != 0.0) # These are GST flags
+            # & (df["f814w_flag"] != 0.0) # These are GST flags
+            (df["f475w_snr"] >= 4.0)
+            & (df["f814w_snr"] >= 4.0)
+            & (df["f475w_crowd"] + df["f814w_crowd"] <= 1.0)
+            & ((df["f475w_sharp"] + df["f814w_sharp"]) ** 2 <= 0.075)
+        ]
 
+    elif gst_criteria == 'Z24':
+            print("Applying Zhuo et al 2024 GST criteria")
+            # Zhuo et al 2024 GST criteria
+            catalog_df = df.loc[
+                # (df["f475w_flag"] != 0.0) # These are GST flags
+            # & (df["f814w_flag"] != 0.0) # These are GST flags
+                (df["f475w_snr"] >= 4.0)
+                & (df["f814w_snr"] >= 4.0)
+                & (df["f475w_crowd"] <= 2.25)
+                & ((df["f475w_sharp"]) ** 2 <= 0.2)
+                & (df["f814w_crowd"] <= 2.25)
+                & ((df["f814w_sharp"]) ** 2 <= 0.2)
+            ]   
     # Apply foreground reddening correction
     # A_lam/A_V: F814W=0.59696, F475W=1.21182 from CMD 3.7 output A_V = 0.17
-    catalog_df["f814w_vega_ecorr"] = catalog_df["f814w_vega"] + 0.596 * 0.17
-    catalog_df["f475w_vega_ecorr"] = catalog_df["f475w_vega"] + 1.212 * 0.17
+    catalog_df["f814w_vega_ecorr"] = catalog_df["f814w_vega"] - 0.596 * 0.17
+    catalog_df["f475w_vega_ecorr"] = catalog_df["f475w_vega"] - 1.212 * 0.17
     catalog_df["f475w-f814w_ecorr"] = (
         catalog_df["f475w_vega_ecorr"] - catalog_df["f814w_vega_ecorr"]
     )
@@ -182,13 +199,15 @@ def reduce_optical_photmetry_table(photometry_fits_filepath, output_filepath):
         (catalog_df["f814w_vega_ecorr"] <= 23.0)
     ]  # Apply after foreground reddening correction
 
+    print(f"Total number of stars after GST cuts and correction: {len(catalog_df)}")
+
     # Save the table
     catalog_df.to_csv(output_filepath)
 
     return catalog_df
 
 
-def phast_reduce_optical_photmetry_table(photometry_fits_filepath, output_filepath):
+def phast_reduce_optical_photmetry_table(photometry_fits_filepath, output_filepath, gst_criteria='Z25'):
     """
     Reads in the photometry fits table produced by the HST pipeline and filters it using the criteria from
     Gregersen et al 2015 for GST. The remaining stars are foreground extinction corrected and saved as a csv.
@@ -200,6 +219,9 @@ def phast_reduce_optical_photmetry_table(photometry_fits_filepath, output_filepa
     output_filepath : str
         Path to the directory where the output csv will be saved
         (i.e /Users/mmckay/phd_projects/analysis_routine/DATA/reduced_phast_catalog.csv)
+    gst_criteria : str, optional
+        Criteria to use for filtering the catalog. Options are 'G15' for Gregersen et al 2015 criteria
+        or 'Z24' for Zhuo et al 2015 criteria, by default 'Z24'
 
     Returns
     -------
@@ -208,33 +230,69 @@ def phast_reduce_optical_photmetry_table(photometry_fits_filepath, output_filepa
 
     """
     df = pd.read_csv(photometry_fits_filepath)
+    print(f"Total number of stars: {len(df)}")
 
-    # Gregersen et al 2015 criteria GST(good stars)
-    catalog_df = df.loc[
-        (df["f475w_flag"] < 8.0)
-        & (df["f814w_flag"] < 8.0)
-        & (df["f475w_snr"] >= 4.0)
-        & (df["f814w_snr"] >= 4.0)
-        & (df["f475w_crowd"] + df["f814w_crowd"] <= 1.0)
-        & ((df["f475w_sharp"] + df["f814w_sharp"]) ** 2 <= 0.075)
-        #  & (df['f814w_vega'] <= 23.0) # Apply after foreground reddening correction
-    ]
+    if gst_criteria == 'G15':
+        
+        # Gregersen et al 2015 criteria GST(good stars)
+        catalog_df = df.loc[
+            (df["f475w_flag"] <= 8.0) # These are DOLPHOT flags
+            & (df["f814w_flag"] <= 8.0) # These are DOLPHOT flags
+            & (df["f475w_snr"] >= 4.0)
+            & (df["f814w_snr"] >= 4.0)
+            & (df["f475w_crowd"] + df["f814w_crowd"] <= 1.0)
+            & ((df["f475w_sharp"] + df["f814w_sharp"]) ** 2 <= 0.075)
+        ]
 
+    elif gst_criteria == 'Z24':
+        print("Applying Zhuo et al 2024 GST criteria")
+        # Zhuo et al 2024 GST criteria
+        catalog_df = df.loc[
+            (df["f475w_flag"] < 8.0) # These are DOLPHOT flags
+            & (df["f814w_flag"] < 8.0) # These are DOLPHOT flags
+            & (df["f475w_snr"] >= 4.0)
+            & (df["f814w_snr"] >= 4.0)
+            & (df["f475w_crowd"] <= 2.25)
+            & ((df["f475w_sharp"]) ** 2 <= 0.2)
+            & (df["f814w_crowd"] <= 2.25)
+            & ((df["f814w_sharp"]) ** 2 <= 0.2)
+        ]   
     # Apply foreground reddening correction
     # A_lam/A_V: F814W=0.59696, F475W=1.21182 from CMD 3.7 output A_V = 0.17
-    catalog_df["f814w_vega_ecorr"] = catalog_df["f814w_vega"] + 0.596 * 0.17
-    catalog_df["f475w_vega_ecorr"] = catalog_df["f475w_vega"] + 1.212 * 0.17
+    catalog_df["f814w_vega_ecorr"] = catalog_df["f814w_vega"] - 0.596 * 0.17
+    catalog_df["f475w_vega_ecorr"] = catalog_df["f475w_vega"] - 1.212 * 0.17
     catalog_df["f475w-f814w_ecorr"] = (
         catalog_df["f475w_vega_ecorr"] - catalog_df["f814w_vega_ecorr"]
     )
     catalog_df = catalog_df.loc[
         (catalog_df["f814w_vega_ecorr"] <= 23.0)
     ]  # Apply after foreground reddening correction
+    print(f"Total number of stars after GST cuts and correction: {len(catalog_df)}")
 
     # Save the table
     catalog_df.to_csv(output_filepath)
 
     return catalog_df
+
+    # df = vaex.open(photometry_fits_filepath)
+    # print(f"Total number of stars: {len(df)}")
+    
+    # df['f475w_st'] = ((df['f475w_snr'] > 4) & (df['f475w_sharp']**2 < 0.2))
+    # df['f475w_gst'] = (df['f475w_st'] & (df['f475w_crowd'] < 2.25))
+    # df['f814w_st'] = ((df['f814w_snr'] > 4) & (df['f814w_sharp']**2 < 0.2))
+    # df['f814w_gst'] = (df['f814w_st'] & (df['f814w_crowd'] < 2.25))
+    # df['opt_st'] = (df['f475w_st'] & df['f814w_st'])
+    # df['opt_gst'] = (df['f475w_gst'] & df['f814w_gst'])
+    # # # A_lam/A_V: F814W=0.59696, F475W=1.21182 from CMD 3.7 output A_V = 0.17
+    # df["f814w_vega_ecorr"] = df["f814w_vega"] - 0.596 * 0.17
+    # df["f475w_vega_ecorr"] = df["f475w_vega"] - 1.212 * 0.17
+    # df["f475w-f814w_ecorr"] = (df["f475w_vega_ecorr"] - df["f814w_vega_ecorr"])
+    # df = df.loc[(df["f814w_vega_ecorr"] <= 23.0)]
+
+    # # Save the table
+    # df.to_csv(output_filepath)
+
+    # return df
 
 
 def catalog_linear_interpolation(

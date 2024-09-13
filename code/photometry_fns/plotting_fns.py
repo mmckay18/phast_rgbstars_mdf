@@ -98,8 +98,8 @@ def plot_CMD(
             df.to_csv(save_filepath, index=False)
             print("Saved RGB selection to {}".format(save_filepath))
         if savefile is True:
-            plt.savefig(savefig_filepath)
-            print("Saved CMD to {}".format(savefig_filepath))
+            plt.savefig(savefig_filepath, dpi=300)
+            print("Saved CMD plot to {}".format(savefig_filepath))
 
     else:
         # Create the scatter plot
@@ -121,7 +121,7 @@ def plot_CMD(
 
         # Save the plot
         if savefile is True:
-            plt.savefig(savefig_filepath)
+            plt.savefig(savefig_filepath, dpi=300)
     plt.show()
     plt.clf()
 
@@ -213,7 +213,7 @@ def photometry_binned_spatial_map(
     plt.xlabel("RA")
     plt.ylabel("Dec")
     plt.title(f"Spatial Binning:{bin_size_deg}")
-    plt.savefig(f"{output_dir}/{catalog_name}_{z_col}_median_binned_spatial_map.jpeg")
+    plt.savefig(f"{output_dir}/{catalog_name}_{z_col}_median_binned_spatial_map.jpeg", dpi=300)
     plt.show()
     plt.clf()
 
@@ -230,7 +230,7 @@ def photometry_binned_spatial_map(
     plt.xlabel("RA")
     plt.ylabel("Dec")
     plt.title(f"Spatial Binning:{bin_size_deg}")
-    plt.savefig(f"{output_dir}/{catalog_name}_{z_col}_sum_binned_spatial_map.jpeg")
+    plt.savefig(f"{output_dir}/{catalog_name}_{z_col}_sum_binned_spatial_map.jpeg", dpi=300)
     plt.show()
     plt.clf()
 
@@ -260,21 +260,21 @@ def plot_cmd_mdf_spatial(
         zorder=1,
         n_levels=10,
         thresh=0.01,
-        fill=False,
+        fill=True,
         cbar=False,
-        color="black",
+        color="grey",
         ax=axs[0],
     )
-    axs[0].set_xlabel("F475W-F814W")
-    axs[0].set_ylabel("F814W")
-    axs[0].set_title(f"Color-Magnitude Diagram N={len(f475w_f814w_ecorr)}")
+    axs[0].set_xlabel("F475W-F814W", fontsize=14)
+    axs[0].set_ylabel("F814W", fontsize=14)
+    axs[0].set_title(f"Color-Magnitude Diagram N={len(f475w_f814w_ecorr)}", fontsize=14)
     axs[0].invert_yaxis()
 
     # Plot interpolated_MH KDE plot
     sns.histplot(data=z_col_arr, color="blue", kde=False, bins=10, ax=axs[1])
-    axs[1].set_xlabel("M/H")
-    axs[1].set_ylabel("N")
-    axs[1].set_title("Metallicity Distribution Function (MDF)")
+    axs[1].set_xlabel("M/H", fontsize=14)
+    axs[1].set_ylabel("N", fontsize=14)
+    axs[1].set_title("Metallicity Distribution Function (MDF)", fontsize=14)
 
     # Stellar Density binned map
     min_ra, max_ra, min_dec, max_dec, median_values, sum_values, density_map = (
@@ -289,9 +289,9 @@ def plot_cmd_mdf_spatial(
         extent=[min_ra, max_ra, max_dec, min_dec],
         norm=colors.LogNorm(),
     )
-    axs[2].set_xlabel("RA")
-    axs[2].set_ylabel("DEC")
-    axs[2].set_title(f"Stellar Density ({bin_size_deg} deg^2)")
+    axs[2].set_xlabel("RA", fontsize=14)
+    axs[2].set_ylabel("DEC", fontsize=14)
+    axs[2].set_title(f"Stellar Density ({bin_size_deg} deg^2)", fontsize=14)
     axs[2].invert_xaxis()
     axs[2].invert_yaxis()
     plt.colorbar(im, label=r"$\log(N \times 0.01\,\mathrm{deg}^2)$")
@@ -303,9 +303,9 @@ def plot_cmd_mdf_spatial(
         aspect="auto",
         extent=[min_ra, max_ra, max_dec, min_dec],
     )
-    axs[3].set_xlabel("RA")
-    axs[3].set_ylabel("DEC")
-    axs[3].set_title(f"Median M/H ({bin_size_deg} deg^2)")
+    axs[3].set_xlabel("RA", fontsize=14)
+    axs[3].set_ylabel("DEC", fontsize=14)
+    axs[3].set_title(f"Median M/H ({bin_size_deg} deg^2)", fontsize=14)
     axs[3].invert_xaxis()
     axs[3].invert_yaxis()
     plt.colorbar(im1, label=f"Median {z_col}")
@@ -316,7 +316,7 @@ def plot_cmd_mdf_spatial(
     # plt.colorbar(im).add_lines(contours)
     # Adjust spacing between subplots
     plt.tight_layout()
-    plt.savefig(savefig_filepath)
+    plt.savefig(savefig_filepath, dpi=300)
     plt.show()
 
     # Save median M/H and stellar density maps to FITS file
