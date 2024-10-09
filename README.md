@@ -53,41 +53,70 @@ Drain Spitzer Dust Mass Surface Density Maps - https://www.astro.princeton.edu/~
 
 1. Apply good star criteria as outline in the [2]
 2. Combine the photometry catalogs for PHAT and PHAST
-3. Apply photometric cut to remove stars dimmer that 23 mag in F814W filter for the isochrone table and the photometry table
+3. Apply photometric cut to remove brighter stars than that 23 mag in F814W filter for the isochrone table and the photometry table
 4. Use linear interpolation to match isochrone table and photometry table
 
 # Code Structure
 
 # Results and Evaluation
 
+## Overview
+
 ## PHAT and PHAST RGB Spatial Metallicity Map
 
 <div align="center">
   <img src="images/m31_analysis_map_subplot.jpeg" alt="Spatial Metallicity Map" width="600"/>
-  <p><b>Figure 1:</b> Spatial Metallicity Map of PHAT and PHAST RGB Stars</p>
+  <p><b>Figure 1:</b> Maps of M31 RGB median metallicity assuming a fiduicial age of $4$ Gyr in $0.01$" square bins. The red cross shows the center of M31. The top map shows the original M31 RGB map and the bottom shows the map after excluding high dust mass regions, removing the well known dust ring of M31</p>
 </div>
 
 ## RGB Metallicity Distrubution Function
+
 <div align="center">
   <img src="images/m31_RGB_phat_phast_mdf.jpeg" alt="Spatial Metallicity Map" width="600"/>
-  <p><b>Figure 1:</b> Spatial Metallicity Map of PHAT and PHAST RGB Stars</p>
+  <p><b>Figure 2:</b>  M31 RGB metallicity distribution function using a flat fiducial age of 4 Gyr. The
+blue, pink and purple histogram represent the complete M31 catalog(PHAT and PHAST),
+PHAT and PHAST respectively, The dash lines are the median metallicity and the values are
+displayed in the legend. We also include the the median metallicity of the PHAT catalog from
+Gregersen et al. (2015) (∼ −0.11dex) in orange. These MDFs are not corrected for systemic
+bias in metallicity but as discussed in Gregersen et al. (2015), the MDF is qualitatively the
+same</p>
 </div>
 
-
 ## RGB Metallicity Gradient
-### NO DUST REMOVAL 
+
+\textbf{RGB Gradient:} M31 4 Gyr RGB stars have a metallicity gradient with a slope of $-0.012 \pm 0.001$dex/kpc. Our RGB metallicity gradient excluding the high dust mass surface density shares a similar slope to the \cite{gregersen_panchromatic_2015} for the PHAT catalog and are 0.1 dex higher in metallicity. The PHAST catalog show a steeper metallicity gradient but within the error of the PHAT catalog. The metallicity gradient is impacted by the exclusion of high dust mass surface density.
+
+### NO DUST REMOVAL
 
 <div align="center">
   <img src="images/mh_gradiant.jpeg" alt="Spatial Metallicity Map" width="600"/>
-  <p><b>Figure 1:</b> Spatial Metallicity Map of PHAT and PHAST RGB Stars</p>
+  <p><b>Figure 1:</b> The median RGB metallicity gradient for the PHAT and PHAST catalogs. The
+orange and yellow colors represent the PHAT and PHAST metallicity radial profile. The blue
+line represent the median metallicity of the combined catalogs and the solid black line. The
+solid black lines represent the line of best fit for the different maps. The median metallicity
+shows to have a very shallow gradient with a slope 0.01dex/kpc in comparison to 0.02dex/kpc
+Gregersen et al. (2015) gradient represented by the dashed purple line. Overall our result is
+in agreement with the RGB metallicity distribution is constant through out the disk. The
+grey represent the incomplete bulge region from Gregersen et al. (2015) to show where less
+reliable measurements are in the the gradient. The vertical dash line represents the half light
+radius Ref f (Courteau et al., 2011)</p>
 </div>
 
-
-### DUST REMOVAL 
+### DUST REMOVAL
 
 <div align="center">
   <img src="images/mh_gradiant_nodust.jpeg" alt="Spatial Metallicity Map" width="600"/>
-  <p><b>Figure 1:</b> Spatial Metallicity Map of PHAT and PHAST RGB Stars</p>
+  <p><b>Figure 1:</b> The median RGB metallicity gradient excluding high dust mass surface density
+regions Log(ΣM⋆,dust)[M⊙kpc−2] > 3e5 for the PHAT and PHAST catalogs. The orange
+and yellow colors represent the PHAT and PHAST metallicity radial profile. The blue line
+represent the median metallicity of the combined catalogs and the solid black line. The solid
+black lines represent the line of best fit for the different maps. The median metallicity shows
+to have a very shallow gradient with a slope 0.01dex/kpc in comparison to 0.02dex/kpc
+Gregersen et al. (2015) gradient represented by the dashed purple line. Overall our result is
+in agreement with the RGB metallicity distribution is constant through out the disk. The
+grey represent the incomplete bulge region from Gregersen et al. (2015) to show where less
+reliable measurements are in the the gradient. The vertical dash line represents the half light
+radius Ref f (Courteau et al., 2011)</p>
 </div>
 
 # Future Work
