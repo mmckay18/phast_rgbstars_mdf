@@ -62,11 +62,33 @@ Drain Spitzer Dust Mass Surface Density Maps - https://www.astro.princeton.edu/~
 
 ## PHAT and PHAST RGB Spatial Metallicity Map
 
-![Spatial Metallicity Map](/images/m31_analysis_map_subplot.pdf)
+<div align="center">
+  <img src="images/m31_analysis_map_subplot.jpeg" alt="Spatial Metallicity Map" width="600"/>
+  <p><b>Figure 1:</b> Spatial Metallicity Map of PHAT and PHAST RGB Stars</p>
+</div>
 
 ## RGB Metallicity Distrubution Function
+<div align="center">
+  <img src="images/m31_RGB_phat_phast_mdf.jpeg" alt="Spatial Metallicity Map" width="600"/>
+  <p><b>Figure 1:</b> Spatial Metallicity Map of PHAT and PHAST RGB Stars</p>
+</div>
+
 
 ## RGB Metallicity Gradient
+### NO DUST REMOVAL 
+
+<div align="center">
+  <img src="images/mh_gradiant.jpeg" alt="Spatial Metallicity Map" width="600"/>
+  <p><b>Figure 1:</b> Spatial Metallicity Map of PHAT and PHAST RGB Stars</p>
+</div>
+
+
+### DUST REMOVAL 
+
+<div align="center">
+  <img src="images/mh_gradiant_nodust.jpeg" alt="Spatial Metallicity Map" width="600"/>
+  <p><b>Figure 1:</b> Spatial Metallicity Map of PHAT and PHAST RGB Stars</p>
+</div>
 
 # Future Work
 
