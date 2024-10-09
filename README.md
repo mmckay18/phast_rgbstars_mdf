@@ -47,7 +47,7 @@ CMD - http://stev.oapd.inaf.it/cgi-bin/cmd
 
 Drain Spitzer Dust Mass Surface Density Maps - https://www.astro.princeton.edu/~draine/m31dust/m31dust.html
 
-## Data Acquisition
+<!-- ## Data Acquisition -->
 
 ## Data Preprocessing
 
@@ -56,11 +56,34 @@ Drain Spitzer Dust Mass Surface Density Maps - https://www.astro.princeton.edu/~
 3. Apply photometric cut to remove brighter stars than that 23 mag in F814W filter for the isochrone table and the photometry table
 4. Use linear interpolation to match isochrone table and photometry table
 
-# Code Structure
+<!-- # Code Structure -->
 
 # Results and Evaluation
 
-## Overview
+- **RGB Gradient:** M31 4 Gyr RGB stars have
+  a metallicity gradient with a slope of −0.012 ±
+  0.001dex/kpc. Our RGB metallicity gradient ex-
+  cluding the high dust mass surface density shares
+  a similar slope to the Gregersen et al. (2015) for
+  the PHAT catalog and are 0.1 dex higher in metal-
+  licity. The PHAST catalog show a steeper metal-
+  licity gradient but within the error of the PHAT
+  catalog. The metallicity gradient is impacted by
+  the exclusion of high dust mass surface density.
+
+- **Compare PHAT and PHAST RGB Gradient:** The PHAST catalog shows a noticeable increase in metallicity from 5 − 7.5kpc before gradually decreasing throughout the southern half of the disk. We present the 4Gyr metallicity gradient from ∼ 8.0 − 16kpc, the slope is −0.025 ± 0.005dex/kpc.
+
+    We apply the exact same processing and data reduction of the PHAST catalog to the PHAT catalog and estimate the metallicity gradient. PHAThas a metallicity gradient slope of −0.009 ± 0.001dex/kpc from ∼ 8.0 − 16kpc. Our metallicity gradient is shallower than the previous study and could relate to the recent improvements to PHAT catalog highlighted in Williams et al. (2023) but it is currently unclear and future analysis will aim to explore the impact of the change in the catalog. PHAT and PHAST catalog are both have shallow metallicity gradient but the PHAST gradient is more than twice as steep as the northern half. The southern half has a slightly higher RGB metallicity than that of the northern half from 7.5 − 11.5kpc and then the metallicity are about the same to the outermost radii. The radial profiles and gradient do not significantly deviate. We interpret this result as the RGB stars are well mixed and distributed across the disk of M31.
+
+
+- **Impact of High Dust Mass:** The metallicity gradient is slightly impacted by the exclusion of high dust mass surface density. We align and the IR dust maps of M31 to our maps of M31 and remove high dust mass surface density ΣM⊙kpc−2 ≥ 3.0 × 105 and then plot the radial profiles for both the PHAT and PHAST catalog. We find that the PHAT and PHAST have slopes of −0.015±0.001dex/kpc and −0.023±0.005 dex/kpc respectively from ∼ 8.0 − 16 kpc. Overall, the exclusion of high dust mass surface density does not significantly affect the metallicity gradient. Interestingly, at ∼ 6 − 9kpc the metallicity slightly increase when dust excluded resulting in an morpronounced peak in the metallicity profile. Further analysis is needed to determine the signifi-
+  cance of this change if any.
+
+- **Metal Rich Bar Feature:** M31 bar is approxi-
+  mately between 3 − 7 kpc (Gregersen et al. 2015).
+  In the M31 radial profile there is a clear the peak
+  in RGB metallicity at ∼ 6 kpc before decreasing in
+  the outer disk. The PHAST catalog shows to continue at the peak metallicity to about 8 kpc and the PHAT catalog show to have a similar metallicity at 5 kpc. Our change in metallicity for both the PHAT and PHAST catalog show noticeable changes where the metal rich bar approximately resides. Further, the region is unaffected by the removal of high dust mass surface density in agreement with Gregersen et al. (2015) that this is signs of a real change in stellar population. Future studies will measure do a more detailed study of the stellar population of the central bar.
 
 ## PHAT and PHAST RGB Spatial Metallicity Map
 
@@ -83,8 +106,6 @@ same</p>
 </div>
 
 ## RGB Metallicity Gradient
-
-\textbf{RGB Gradient:} M31 4 Gyr RGB stars have a metallicity gradient with a slope of $-0.012 \pm 0.001$dex/kpc. Our RGB metallicity gradient excluding the high dust mass surface density shares a similar slope to the \cite{gregersen_panchromatic_2015} for the PHAT catalog and are 0.1 dex higher in metallicity. The PHAST catalog show a steeper metallicity gradient but within the error of the PHAT catalog. The metallicity gradient is impacted by the exclusion of high dust mass surface density.
 
 ### NO DUST REMOVAL
 
