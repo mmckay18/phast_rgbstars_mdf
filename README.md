@@ -16,10 +16,14 @@ By Myles McKay(@mmckay18),
 
 - [Introduction](#introduction)
 - [Research Abstract](#research-abstract)
-- [Data Sources](#data-sources)
+- [Data](#data) - [Data Sources](#data-sources) - [Data Acquisition](#data-acquisition) - [Data Preprocessing](#data-preprocessing)
 - [Results and Evaluation](#results-and-evaluation)
+  - [PHAT and PHAST RGB Spatial Metallicity Map](#phat-and-phast-rgb-spatial-metallicity-map)
+  - [RGB Metallicity Distribution Function](#rgb-metallicity-distribution-function)
+  - [RGB Metallicity Gradient](#rgb-metallicity-gradient)
+- [Future Work](#future-work)
 - [References](#references)
-- [License](#license)
+<!-- - [License](#license) -->
 
 # Introduction
 
@@ -73,8 +77,7 @@ Drain Spitzer Dust Mass Surface Density Maps - https://www.astro.princeton.edu/~
 
 - **Compare PHAT and PHAST RGB Gradient:** The PHAST catalog shows a noticeable increase in metallicity from 5 − 7.5kpc before gradually decreasing throughout the southern half of the disk. We present the 4Gyr metallicity gradient from ∼ 8.0 − 16kpc, the slope is −0.025 ± 0.005dex/kpc.
 
-    We apply the exact same processing and data reduction of the PHAST catalog to the PHAT catalog and estimate the metallicity gradient. PHAThas a metallicity gradient slope of −0.009 ± 0.001dex/kpc from ∼ 8.0 − 16kpc. Our metallicity gradient is shallower than the previous study and could relate to the recent improvements to PHAT catalog highlighted in Williams et al. (2023) but it is currently unclear and future analysis will aim to explore the impact of the change in the catalog. PHAT and PHAST catalog are both have shallow metallicity gradient but the PHAST gradient is more than twice as steep as the northern half. The southern half has a slightly higher RGB metallicity than that of the northern half from 7.5 − 11.5kpc and then the metallicity are about the same to the outermost radii. The radial profiles and gradient do not significantly deviate. We interpret this result as the RGB stars are well mixed and distributed across the disk of M31.
-
+  We apply the exact same processing and data reduction of the PHAST catalog to the PHAT catalog and estimate the metallicity gradient. PHAThas a metallicity gradient slope of −0.009 ± 0.001dex/kpc from ∼ 8.0 − 16kpc. Our metallicity gradient is shallower than the previous study and could relate to the recent improvements to PHAT catalog highlighted in Williams et al. (2023) but it is currently unclear and future analysis will aim to explore the impact of the change in the catalog. PHAT and PHAST catalog are both have shallow metallicity gradient but the PHAST gradient is more than twice as steep as the northern half. The southern half has a slightly higher RGB metallicity than that of the northern half from 7.5 − 11.5kpc and then the metallicity are about the same to the outermost radii. The radial profiles and gradient do not significantly deviate. We interpret this result as the RGB stars are well mixed and distributed across the disk of M31.
 
 - **Impact of High Dust Mass:** The metallicity gradient is slightly impacted by the exclusion of high dust mass surface density. We align and the IR dust maps of M31 to our maps of M31 and remove high dust mass surface density ΣM⊙kpc−2 ≥ 3.0 × 105 and then plot the radial profiles for both the PHAT and PHAST catalog. We find that the PHAT and PHAST have slopes of −0.015±0.001dex/kpc and −0.023±0.005 dex/kpc respectively from ∼ 8.0 − 16 kpc. Overall, the exclusion of high dust mass surface density does not significantly affect the metallicity gradient. Interestingly, at ∼ 6 − 9kpc the metallicity slightly increase when dust excluded resulting in an morpronounced peak in the metallicity profile. Further analysis is needed to determine the signifi-
   cance of this change if any.
