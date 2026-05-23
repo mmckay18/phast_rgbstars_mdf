@@ -2,3 +2,4 @@
 /FIGURES/*
 *.pyc
 /code/photometry_fns/__pycache__/*
+/astro_py3_12_venv/

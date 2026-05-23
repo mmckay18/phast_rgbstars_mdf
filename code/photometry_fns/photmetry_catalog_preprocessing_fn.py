@@ -9,7 +9,7 @@ import numpy as np
 from scipy.interpolate import LinearNDInterpolator
 from astropy.io import fits
 from astropy.table import Table
-import vaex
+# import vaex
 
 
 def make_optical_photmetry_from_hst_dataproduct(
