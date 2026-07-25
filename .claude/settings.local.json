@@ -3,7 +3,8 @@
     "allow": [
       "Bash(python3)",
       "Bash(git checkout *)",
-      "Bash(python3 -c ' *)"
+      "Bash(python3 -c ' *)",
+      "Bash(python3 -c \"import nbformat; print\\(nbformat.__version__\\)\")"
     ]
   }
 }
